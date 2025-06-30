@@ -1,0 +1,28 @@
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios'); // If you're making an API call
+
+const imagePath = path.join(__dirname, 'contoso_layout_sketch.jpg');
+const imageData = fs.readFileSync(imagePath, { encoding: 'base64' });
+
+const userQuery = "Write HTML and CSS code for a web page based on the following hand-drawn sketch.";
+
+// Example payload for an API that accepts image and text
+const payload = {
+    prompt: userQuery,
+    image: imageData // or { data: imageData, mime_type: 'image/jpeg' } depending on API
+};
+
+// Example POST request (replace URL and headers as needed)
+axios.post('https://api.example.com/generate', payload, {
+    headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer YOUR_API_KEY'
+    }
+})
+.then(response => {
+    console.log(response.data);
+})
+.catch(error => {
+    console.error(error);
+});
